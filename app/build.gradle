@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "sebrae.com.br.rastrearcomida"
+        applicationId "br.com.sebrae.rastrearcomida"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
