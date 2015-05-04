@@ -7,6 +7,15 @@ public class Empresa{
     private Long id;
     private String nome;
     private String descricao;
+    private Endereco endereco;
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
     public Long getId() {
         return id;

@@ -16,6 +16,11 @@
         android:hint="Pesquisa"
         android:drawableLeft="@drawable/ic_action_search"/>
 
+    <TextView
+        android:id="@+id/distancia"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

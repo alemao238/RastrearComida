@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sebrae.rastrearcomida.R;
@@ -62,6 +63,45 @@ public class ListaEmpresaAdapter extends ArrayAdapter<Empresa>{
 
     @Override
     public Filter getFilter() {
-        return super.getFilter();
+        Filter filter = new Filter(){
+
+            @Override
+            protected FilterResults performFiltering(CharSequence filtro) {
+                FilterResults results = new FilterResults();
+                //se não foi realizado nenhum filtro insere todos os itens.
+                if (filtro == null || filtro.length() == 0) {
+                    results.count = empresas.size();
+                    results.values = empresas;
+                } else {
+                    //cria um array para armazenar os objetos filtrados.
+                    List<Empresa> itens_filtrados = new ArrayList<Empresa>();
+
+                    //percorre toda lista verificando se contem a palavra do filtro na descricao do objeto.
+                    for (int i = 0; i < empresas.size(); i++) {
+                        Empresa data = empresas.get(i);
+
+                        filtro = filtro.toString().toLowerCase();
+                        String condicao = data.getNome().toLowerCase();
+
+                        if (condicao.contains(filtro)) {
+                            //se conter adiciona na lista de itens filtrados.
+                            itens_filtrados.add(data);
+                        }
+                    }
+                    // Define o resultado do filtro na variavel FilterResults
+                    results.count = itens_filtrados.size();
+                    results.values = itens_filtrados;
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                itens_exibicao = (List<Empresa>) results.values; // Valores filtrados.
+                notifyDataSetChanged();  // Notifica a lista de alteração
+            }
+        };
+        return filter;
     }
 }
