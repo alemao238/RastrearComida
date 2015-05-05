@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Coloque o seu e-mail:"/>
+
+        <EditText
+            android:id="@+id/senha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Coloque a sua senha:"/>
+
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logar"/>
+
+        <TextView
+            android:id="@+id/esqueceuSenha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/esqueceu_senha"
+            android:paddingTop="10dp"
+            android:textStyle="italic"
+            android:textSize="20dp"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:id="@+id/rodape">
+
+        <Button
+            android:id="@+id/btnCriarLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nao_tem_login"
+            android:textColor="#FFF"
+            android:background="#005500"/>
+
+    </LinearLayout>
+</RelativeLayout>

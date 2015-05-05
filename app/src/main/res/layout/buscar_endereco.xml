@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/uf"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/uf"/>
+
+        <EditText
+            android:id="@+id/estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/estado"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/logradouro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/logradouro"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/cep"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/cep"/>
+
+        <EditText
+            android:id="@+id/numero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/numero"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnBuscarEndereco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buscar_endereco"/>
+
+    <ListView
+        android:id="@+id/listaEndereco"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

@@ -90,7 +90,7 @@ public class MainActivity extends Activity{
         LatLng latLng2 = localizador.getCoordenada("Rua Londrina 167, Nova Estação, Rio Branco");
         distanciaView = (TextView) findViewById(R.id.distancia);
         distanciaView.setText(String.valueOf(distance(latLng, latLng2))+" metros");
-        getRoute(latLng, latLng2);
+        //getRoute(latLng, latLng2);
         Log.i("Distancia: ", String.valueOf(distance(latLng, latLng2)));
         if(latLng != null){
             Log.i("Latitudee: ",String.valueOf(latLng.latitude));

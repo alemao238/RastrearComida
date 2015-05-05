@@ -36,11 +36,38 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
+        </activity>
+
+        <activity android:name=".activity.Login"
+            android:label="Login"
+            android:parentActivityName=".activity.TelaInicial">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.TelaInicial" />
+        </activity>
+
+        <activity android:name=".activity.BuscarEndereco"
+            android:label="Buscar Endereço"
+            android:parentActivityName=".activity.TelaInicial">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.TelaInicial" />
+        </activity>
+
+        <activity android:name=".activity.TelaInicial"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.CadastroUsuarioCliente"
+            android:label="Cadastro"
+            android:parentActivityName=".activity.Login">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.Login" />
         </activity>
     </application>
 
