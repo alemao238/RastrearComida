@@ -39,8 +39,9 @@
 
         <EditText
             android:id="@+id/cep"
-            android:layout_width="260dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:numeric="integer"
             android:hint="@string/cep"/>
 
         <EditText
@@ -54,7 +55,9 @@
         android:id="@+id/btnBuscarEndereco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/buscar_endereco"/>
+        android:text="@string/buscar_endereco"
+        android:textColor="#FFF"
+        android:background="#005500"/>
 
     <ListView
         android:id="@+id/listaEndereco"
