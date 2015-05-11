@@ -1,18 +1,40 @@
 package br.com.sebrae.rastrearcomida.modelo;
 
+import java.io.Serializable;
+
 /**
  * Created by Israel on 02/05/2015.
  */
-public class Endereco {
+public class Endereco implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String logradouro;
     private String numero;
     private String bairro;
     private String cidade;
+    private String estado;
     private String distancia;
+    private Empresa empresa;
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 
     public String getDistancia() {
         return distancia;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public void setDistancia(String distancia) {
@@ -57,5 +79,27 @@ public class Endereco {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Endereco endereco = (Endereco) o;
+
+        if (!id.equals(endereco.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return logradouro;
     }
 }

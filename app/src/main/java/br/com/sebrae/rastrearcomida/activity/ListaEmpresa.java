@@ -2,14 +2,13 @@ package br.com.sebrae.rastrearcomida.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -17,6 +16,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -27,59 +27,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sebrae.rastrearcomida.R;
+import br.com.sebrae.rastrearcomida.adapter.ListaEmpresaAdapter;
+import br.com.sebrae.rastrearcomida.modelo.Empresa;
 import br.com.sebrae.rastrearcomida.modelo.Endereco;
-import br.com.sebrae.rastrearcomida.task.RecebeEnderecoTask;
 
 /**
- * Created by Israel on 04/05/2015.
+ * Created by Israel on 06/05/2015.
  */
-public class BuscarEndereco extends Activity{
-    private String cep;
+public class ListaEmpresa extends Activity{
+    private ListaEmpresaAdapter listaEmpresaAdapter;
+    private ListView lista;
     private Endereco endereco;
-    private EditText txtCep;
-    private EditText txtNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.buscar_endereco);
+        setContentView(R.layout.lista_empresa);
 
-        txtCep = (EditText) findViewById(R.id.cep);
-        txtNumero = (EditText) findViewById(R.id.numero);
+        lista = (ListView) findViewById(R.id.listaEmpresa);
 
-        Button btnBuscar = (Button) findViewById(R.id.btnBuscarEndereco);
-        btnBuscar.setOnClickListener(new View.OnClickListener() {
+        endereco = (Endereco) getIntent().getSerializableExtra("endereco");
+        new JsonDownload().execute("http://irish-drunk-204978.sae1.nitrousbox.com/empresas.json");
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
             @Override
-            public void onClick(View v) {
-                cep = txtCep.getText().toString();
-                String url = "http://viacep.com.br/ws/"+cep+"/json/";
-                new JsonDownload().execute(url);
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Empresa empresa = (Empresa) parent.getAdapter().getItem(position);
+
+                Intent intent = new Intent(ListaEmpresa.this, ListaProduto.class);
+                intent.putExtra("empresa", empresa);
+                startActivity(intent);
             }
         });
+
     }
 
-    //get e set
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    class JsonDownload extends AsyncTask<String, Void, List<Endereco>> {
+    class JsonDownload extends AsyncTask<String, Void, List<Empresa>> {
         ProgressDialog dialog;
 
         //Exibe pop-up indicando que está sendo feito o download do JSON
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = ProgressDialog.show(BuscarEndereco.this, "Aguarde",
-                    "Buscando endereço...");
+            dialog = ProgressDialog.show(ListaEmpresa.this, "Aguarde",
+                    "Buscando empresas...");
         }
 
         @Override
-        protected List<Endereco> doInBackground(String... params) {
+        protected List<Empresa> doInBackground(String... params) {
             String urlString = params[0];
             HttpClient httpclient = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(urlString);
@@ -90,8 +87,8 @@ public class BuscarEndereco extends Activity{
                     InputStream instream = entity.getContent();
                     String json = getStringFromInputStream(instream);
                     instream.close();
-                    List<Endereco> enderecos = getEndereco(json);
-                    return enderecos;
+                    List<Empresa> empresas = getEmpresa(json);
+                    return empresas;
                 }
             } catch (Exception e) {
                 Log.e("Erro", "Falha ao acessar Web service", e);
@@ -101,32 +98,32 @@ public class BuscarEndereco extends Activity{
 
         //Depois de executada a chamada do serviço
         @Override
-        protected void onPostExecute(List<Endereco> result) {
+        protected void onPostExecute(List<Empresa> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-            setEndereco(result.get(0));
-            endereco.setNumero(txtNumero.getText().toString());
 
-            // Chamando outra activity, passando o objeto endereco
-            Intent intent = new Intent(BuscarEndereco.this, ListaEmpresa.class);
-            intent.putExtra("endereco", endereco);
-            startActivity(intent);
+            listaEmpresaAdapter = new ListaEmpresaAdapter(ListaEmpresa.this, result);
+            lista.setAdapter(listaEmpresaAdapter);
         }
 
-        private List<Endereco> getEndereco(String jsonString){
-            List<Endereco> enderecos = new ArrayList<Endereco>();
+        private List<Empresa> getEmpresa(String jsonString){
+            List<Empresa> empresas = new ArrayList<Empresa>();
             try {
-                JSONObject pessoa = new JSONObject(jsonString);
-                Endereco obj = new Endereco();
-                obj.setLogradouro(pessoa.getString("logradouro"));
-                obj.setBairro(pessoa.getString("bairro"));
-                obj.setCidade(pessoa.getString("localidade"));
-                obj.setEstado(pessoa.getString("uf"));
-                enderecos.add(obj);
+                JSONArray pessoasJson = new JSONArray(jsonString);
+                JSONObject pessoa;
+                for(int i = 0; i < pessoasJson.length(); i++){
+                    pessoa = new JSONObject(pessoasJson.getString(i));
+
+                    Empresa obj = new Empresa();
+                    obj.setNome(pessoa.getString("nome"));
+                    obj.setCnpj(pessoa.getString("cnpj"));
+                    obj.setDescricao(pessoa.getString("descricao"));
+                    empresas.add(obj);
+                }
             } catch (Exception e) {
-                Log.e("Erro", "Erro no parsing do JSON", e);
+                Log.e("Erro", "Erro no parsing do JSON"+e.getMessage(), e);
             }
-            return enderecos;
+            return empresas;
         }
 
         //Converte objeto InputStream para String

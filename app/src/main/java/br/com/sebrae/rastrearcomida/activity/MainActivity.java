@@ -57,7 +57,6 @@ public class MainActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         // Dados ficticios
         List<Empresa> listaEmpresas = new ArrayList<Empresa>();
@@ -76,7 +75,7 @@ public class MainActivity extends Activity{
         empresa.getEndereco().setLogradouro("Rua Londrina 169, Nova Estação, Rio Branco");
         listaEmpresas.add(empresa);
 
-        lista = (ListView) findViewById(R.id.listaFood);
+        lista = (ListView) findViewById(R.id.listaEmpresa);
 
         //GoogleMapOptions options = new GoogleMapOptions();
         //options.zOrderOnTop(true);
@@ -88,7 +87,7 @@ public class MainActivity extends Activity{
         Localizador localizador = new Localizador(this);
         LatLng latLng = localizador.getCoordenada("Rua Virgilio Lima 126, Seis de Agosto, Rio Branco");
         LatLng latLng2 = localizador.getCoordenada("Rua Londrina 167, Nova Estação, Rio Branco");
-        distanciaView = (TextView) findViewById(R.id.distancia);
+        //distanciaView = (TextView) findViewById(R.id.distancia);
         distanciaView.setText(String.valueOf(distance(latLng, latLng2))+" metros");
         //getRoute(latLng, latLng2);
         Log.i("Distancia: ", String.valueOf(distance(latLng, latLng2)));

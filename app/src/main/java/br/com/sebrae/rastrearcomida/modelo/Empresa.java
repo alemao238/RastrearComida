@@ -1,13 +1,35 @@
 package br.com.sebrae.rastrearcomida.modelo;
 
+import java.io.Serializable;
+
 /**
  * Created by dmapc on 30/04/2015.
  */
-public class Empresa{
+public class Empresa implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String nome;
     private String descricao;
+    private String cnpj;
+    private String razao_social;
     private Endereco endereco;
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getRazao_social() {
+        return razao_social;
+    }
+
+    public void setRazao_social(String razao_social) {
+        this.razao_social = razao_social;
+    }
 
     public Endereco getEndereco() {
         return endereco;
@@ -39,5 +61,27 @@ public class Empresa{
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Empresa obj = (Empresa) o;
+
+        if (!id.equals(obj.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }
