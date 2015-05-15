@@ -13,11 +13,11 @@ public class UsuarioConverterJson {
         try {
             JSONStringer jsonStringer = new JSONStringer();
             jsonStringer.object()
-                    //.key("nome").value(usuario.getNome())
+                    .key("nome").value(usuario.getNome())
                     .key("email").value(usuario.getEmail())
                     .key("password").value(usuario.getSenha())
-                    .key("password_confirmation").value(usuario.getSenha())
-                    //.key("tipo").value(1)
+                    .key("password_confirmation").value(usuario.getConfirmacao_senha())
+                    .key("tipo").value(1)
                     .endObject();
             return jsonStringer.toString();
         } catch (JSONException e) {

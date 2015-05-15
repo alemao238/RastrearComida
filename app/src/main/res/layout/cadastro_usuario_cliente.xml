@@ -41,7 +41,7 @@
             android:hint="@string/senha"/>
 
         <EditText
-            android:id="@+id/repetirSenha"
+            android:id="@+id/confirmacaoSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:password="true"

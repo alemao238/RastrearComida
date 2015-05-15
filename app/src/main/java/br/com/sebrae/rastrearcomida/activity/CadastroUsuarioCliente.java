@@ -40,9 +40,11 @@ public class CadastroUsuarioCliente extends Activity {
                 EditText txtNome = (EditText) findViewById(R.id.nome);
                 EditText txtEmail = (EditText) findViewById(R.id.email);
                 EditText txtSenha = (EditText) findViewById(R.id.senha);
+                EditText txtConfirmacaoSenha = (EditText) findViewById(R.id.confirmacaoSenha);
                 usuario.setNome(txtNome.getText().toString());
                 usuario.setEmail(txtEmail.getText().toString());
                 usuario.setSenha(txtSenha.getText().toString());
+                usuario.setConfirmacao_senha(txtConfirmacaoSenha.getText().toString());
 
                 new EnviaUsuariosTask(CadastroUsuarioCliente.this, usuario).execute();
             }
@@ -67,7 +69,7 @@ public class CadastroUsuarioCliente extends Activity {
 
             p.put("nome", "Jhonny gay");
 
-            client.post("http://irish-drunk-204978.sae1.nitrousbox.com/tipos_restaurantes/new/", p, new AsyncHttpResponseHandler() {
+            client.post("http://matafome.herokuapp.com/usuarios/sign_up", p, new AsyncHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] arg1, byte[] arg2) {

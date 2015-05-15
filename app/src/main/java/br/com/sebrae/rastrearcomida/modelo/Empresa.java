@@ -1,6 +1,7 @@
 package br.com.sebrae.rastrearcomida.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by dmapc on 30/04/2015.
@@ -14,6 +15,15 @@ public class Empresa implements Serializable{
     private String cnpj;
     private String razao_social;
     private Endereco endereco;
+    private List<Produto> produtos;
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
 
     public String getCnpj() {
         return cnpj;

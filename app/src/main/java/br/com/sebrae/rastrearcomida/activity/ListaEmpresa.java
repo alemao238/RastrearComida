@@ -30,6 +30,7 @@ import br.com.sebrae.rastrearcomida.R;
 import br.com.sebrae.rastrearcomida.adapter.ListaEmpresaAdapter;
 import br.com.sebrae.rastrearcomida.modelo.Empresa;
 import br.com.sebrae.rastrearcomida.modelo.Endereco;
+import br.com.sebrae.rastrearcomida.modelo.Produto;
 
 /**
  * Created by Israel on 06/05/2015.
@@ -47,7 +48,7 @@ public class ListaEmpresa extends Activity{
         lista = (ListView) findViewById(R.id.listaEmpresa);
 
         endereco = (Endereco) getIntent().getSerializableExtra("endereco");
-        new JsonDownload().execute("http://irish-drunk-204978.sae1.nitrousbox.com/empresas.json");
+        new JsonDownload().execute("http://matafome.herokuapp.com/empresas.json");
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
@@ -115,13 +116,29 @@ public class ListaEmpresa extends Activity{
                     pessoa = new JSONObject(pessoasJson.getString(i));
 
                     Empresa obj = new Empresa();
+                    obj.setId(Long.parseLong(pessoa.getString("id")));
                     obj.setNome(pessoa.getString("nome"));
-                    obj.setCnpj(pessoa.getString("cnpj"));
                     obj.setDescricao(pessoa.getString("descricao"));
+                    obj.setCnpj(pessoa.getString("cnpj"));
+
+                    JSONArray produtosJson = new JSONArray(pessoa.getString("produtos"));
+                    JSONObject produto;
+                    for (int j = 0; j < produtosJson.length(); j++){
+                        produto = new JSONObject(produtosJson.getString(j));
+
+                        Produto p = new Produto();
+                        p.setId(Long.parseLong(produto.getString("id")));
+                        p.setDescricao(produto.getString("descricao"));
+                        p.setValor_unitario(Double.parseDouble(produto.getString("valor_unitario")));
+
+                        if(obj.getProdutos() == null)
+                            obj.setProdutos(new ArrayList<Produto>());
+                        obj.getProdutos().add(p);
+                    }
                     empresas.add(obj);
                 }
             } catch (Exception e) {
-                Log.e("Erro", "Erro no parsing do JSON"+e.getMessage(), e);
+                Log.e("Erro", "Erro no parsing do JSON "+e.getMessage(), e);
             }
             return empresas;
         }

@@ -31,7 +31,7 @@ public class EnviaUsuariosTask extends AsyncTask<Object, Object, String>{
     @Override
     protected String doInBackground(Object... params) {
         String json = new UsuarioConverterJson().toJSON(usuario);
-        String url = "http://irish-drunk-204978.sae1.nitrousbox.com/usuarios/";
+        String url = "http://matafome.herokuapp.com/usuarios/";
         String media = new WebClient(url).post(json);
         return media;
     }
